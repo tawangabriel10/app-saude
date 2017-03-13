@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:spatial="http://www.liquibase.org/xml/ns/dbchangelog-ext/liquibase-spatial"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd 
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext/liquibase-spatial http://lonnyj.github.com/liquibase-spatial/liquibase-spatial.xsd">
+
+
+    <changeSet author="tawan.gabriel" id="1.0">
+
+        <createTable schemaName="appsaude" tableName="tb_usuario">
+            <column name="id_usuario" type="bigint">
+            	<constraints unique="true" nullable="false" />
+            </column>
+            <column name="ds_nome" type="varchar(255)">
+                <constraints unique="false" nullable="false" />
+            </column>
+            <column name="ds_email" type="varchar(155)">
+                <constraints unique="false" nullable="false" />
+            </column>
+            <column name="ds_senha" type="varchar(255)">
+                <constraints unique="false" nullable="false" />
+            </column>
+        </createTable>
+        <createSequence sequenceName="tb_usuario_seq"
+                        schemaName="appsaude" startValue="1" incrementBy="1"/>
+		<addPrimaryKey 
+			schemaName="appsaude"
+			tableName="tb_usuario"
+			columnNames="id_usuario" />
+		
+    </changeSet>
+
+
+    <changeSet author="tawan.gabriel" id="1.1">
+
+        <createTable schemaName="appsaude" tableName="tb_estabelecimento">
+            <column name="id_estabelecimento" type="bigint">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="ds_bairro" type="text"/>
+            <column name="ds_categoria_unidade" type="text"/>
+            <column name="nu_cep" type="text"/>
+            <column name="ds_cidade" type="text"/>
+            <column name="nu_cnpj" type="text"/>
+            <column name="nu_codigo_cnes" type="text"/>
+            <column name="nu_codigo_ibge" type="text"/>
+            <column name="nu_codigo_unidade" type="text"/>
+            <column name="ds_descricao_completa" type="text"/>
+            <column name="ds_email" type="text"/>
+            <column name="ds_esfera_adminitrativa" type="text"/>
+            <column name="nu_fluxo_clientela" type="text"/>
+            <column name="ds_grupo" type="text"/>
+            <column name="ds_logradouro" type="text"/>
+            <column name="ds_natureza" type="text"/>
+            <column name="ds_nome_fantasia" type="text"/>
+            <column name="nu_numero" type="text"/>
+            <column name="ds_origem_geografica" type="text"/>
+            <column name="ds_retencao" type="text"/>
+            <column name="nu_telefone" type="text"/>
+            <column name="ds_tem_atendimento_ambulatorial" type="text"/>
+            <column name="ds_tem_atendimento_urgencia" type="text"/>
+            <column name="ds_tem_centro_cirurgico" type="text"/>
+            <column name="ds_tem_dialise" type="text"/>
+            <column name="ds_tem_neo_natal" type="text"/>
+            <column name="ds_tem_obstetra" type="text"/>
+            <column name="ds_tipo_unidade" type="text"/>
+            <column name="ds_tipo_unidade_cnes" type="text"/>
+            <column name="ds_turno_atendimento" type="text"/>
+            <column name="ds_uf" type="text"/>
+            <column name="ds_vinculo_sus" type="text"/>
+            <column name="nu_latitude" type="double"/>
+            <column name="nu_longitude" type="double"/>
+        </createTable>
+        <createSequence sequenceName="tb_estabelecimento_seq"
+                        schemaName="appsaude" startValue="1" incrementBy="1"/>
+        <addPrimaryKey
+                schemaName="appsaude"
+                tableName="tb_estabelecimento"
+                columnNames="id_estabelecimento" />
+
+    </changeSet>
+
+
+</databaseChangeLog>

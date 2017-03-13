@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:spatial="http://www.liquibase.org/xml/ns/dbchangelog-ext/liquibase-spatial"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+         http://www.liquibase.org/xml/ns/dbchangelog-ext/liquibase-spatial
+         http://lonnyj.github.com/liquibase-spatial/liquibase-spatial.xsd">
+
+
+    <include file="src/main/resources/db/changelog/changelog-1.0.principal.xml"/>
+
+</databaseChangeLog>

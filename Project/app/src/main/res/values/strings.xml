@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">project</string>
+
+    <string name="usuario">Email</string>
+    <string name="senha">Senha</string>
+
+    <string name="entrar">Entrar</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="buscar">Buscar</string>
+
+    <string name="erro_autenticao">Email ou senha inválidos!</string>
+
+    <string name="msg_usuario_cadastrado_sucesso">Usuário cadastrado com sucesso!</string>
+    <string name="msg_usuario_cadastrado_falha">Erro ao tentar cadastrar usuário!</string>
+</resources>
