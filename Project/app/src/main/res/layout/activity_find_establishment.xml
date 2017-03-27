@@ -4,16 +4,10 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/btnListaUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:text="@string/buscar" />
-
     <ListView
-        android:id="@+id/lista"
+        android:id="@+id/listaEstabelecimento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
     </ListView>
+
 </LinearLayout>

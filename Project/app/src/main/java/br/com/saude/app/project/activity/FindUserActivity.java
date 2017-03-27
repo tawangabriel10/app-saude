@@ -1,77 +1,50 @@
 package br.com.saude.app.project.activity;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Arrays;
 
 import br.com.saude.app.project.R;
-import br.com.saude.app.project.component.NetworkRequestCallback;
-import br.com.saude.app.project.service.UsuarioService;
-import br.com.saude.app.project.util.HTTPUtils;
+import br.com.saude.app.project.model.Usuario;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by tawan on 3/3/17.
  */
-
 public class FindUserActivity extends AppCompatActivity {
 
     private static final String TAG = "FindUserActivity";
 
-    private static final String URL ="http://localhost:8080/usuario";
-
+    @BindView(R.id.lista)
     private ListView lista;
-    private Button btnBuscarUsuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_user);
 
-        lista = (ListView) findViewById(R.id.lista);
     }
 
+    @OnClick(R.id.btnListaUsuario)
     public void buscarUserOnClick(View v) {
-        new TwitterTask().execute();
+        new UsuarioTask().execute();
     }
 
-
-    private class TwitterTask extends AsyncTask<String, Void, String[]> {
+    private class UsuarioTask extends AsyncTask<String, Void, Usuario> {
 
         ProgressDialog dialog;
 
         @Override
-        protected String[] doInBackground(String... params) {
-            try {
-                String urlTwitter = "http://localhost:8080/usuario";
-                String url = Uri.parse(urlTwitter).toString();
-
-                String conteudo = HTTPUtils.acessar(url);
-
-                JSONObject jsonObject = new JSONObject(conteudo);
-                JSONArray resultados = jsonObject.getJSONArray("results");
-
-                String[] tweets = new String[resultados.length()];
-                for (int i = 0; i < resultados.length(); i++) {
-                    JSONObject tweet = resultados.getJSONObject(i);
-                    String texto = tweet.getString("text");
-                    String usuario = tweet.getString("from_user");
-                    tweets[i] = usuario + " - " + texto;
-                }
-                return tweets;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        protected Usuario doInBackground(String... params) {
+            return null;
         }
 
         @Override
@@ -79,12 +52,13 @@ public class FindUserActivity extends AppCompatActivity {
             dialog = new ProgressDialog(FindUserActivity.this);
             dialog.show();
         }
+
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(Usuario result) {
             if(result != null){
-                ArrayAdapter<String> adapter =
-                        new ArrayAdapter<String>(getBaseContext(),
-                                android.R.layout.simple_list_item_1, result);
+                ArrayAdapter<Usuario> adapter =
+                        new ArrayAdapter<Usuario>(getBaseContext(),
+                                android.R.layout.simple_list_item_1, Arrays.asList(result));
                 lista.setAdapter(adapter);
             }
             dialog.dismiss();

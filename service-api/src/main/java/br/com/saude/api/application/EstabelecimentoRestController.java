@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,9 +49,9 @@ public class EstabelecimentoRestController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<Estabelecimento>> buscar(@RequestParam(name = "offset", required = true) int offset,
-                                                        @RequestParam(name = "limit", required = true) int limit) {
+    @RequestMapping(value = "/buscar/{offset}/{limit}",method = RequestMethod.GET)
+    public ResponseEntity<Page<Estabelecimento>> buscar(@PathVariable("offset") int offset,
+                                                        @PathVariable("limit") int limit) {
         return new ResponseEntity<Page<Estabelecimento>>(estabelecimentoService.buscar(offset, limit), HttpStatus.OK);
 
     }
