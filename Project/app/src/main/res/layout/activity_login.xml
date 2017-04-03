@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/usuario" />
     <EditText
-        android:id="@+id/usuario"
+        android:id="@+id/emailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text" >
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/senha" />
     <EditText
-        android:id="@+id/senha"
+        android:id="@+id/senhaLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword" />

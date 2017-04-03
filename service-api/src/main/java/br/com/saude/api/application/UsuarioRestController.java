@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +29,11 @@ public class UsuarioRestController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity acessarSistema(@RequestBody LoginDTO dados) {
-        usuarioService.autenticarLogin(dados);
-        return new ResponseEntity(HttpStatus.OK);
+        Usuario usuarioRetornado = usuarioService.autenticarLogin(dados);
+        if (usuarioRetornado.getId() != null) {
+        	return new ResponseEntity(usuarioRetornado, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -45,5 +49,10 @@ public class UsuarioRestController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Usuario>> buscar() {
         return new ResponseEntity<List<Usuario>>(usuarioService.buscar(), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Usuario> consultar(@PathVariable("id") Long id) {
+        return new ResponseEntity<Usuario>(usuarioService.consultar(id), HttpStatus.OK);
     }
 }

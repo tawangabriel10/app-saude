@@ -24,13 +24,16 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FindEstablishmentActivity extends AppCompatActivity {
 
     @BindView(R.id.listaEstabelecimento)
     ListView listView;
 
-    @Inject
+    private Retrofit retrofit;
+
     private EstabelecimentoService estabelecimentoService;
 
     List<Estabelecimento> estabelecimentoList;
@@ -45,16 +48,21 @@ public class FindEstablishmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_establishment);
         ButterKnife.bind(this);
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.7:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
-        estabelecimentoService.buscarEstabelecimentos(1, 10, new Callback<Page<Estabelecimento>>() {
+
+        estabelecimentoService = retrofit.create(EstabelecimentoService.class);
+        Call<List<Estabelecimento>> resposta = estabelecimentoService.buscarEstabelecimentos(1, 10);
+
+        resposta.enqueue(new Callback<List<Estabelecimento>>() {
             @Override
-            public void onResponse(Call<Page<Estabelecimento>> call, Response<Page<Estabelecimento>> response) {
-                try {
-                    response = call.execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                estabelecimentoList = response.body().getContent();
+            public void onResponse(Call<List<Estabelecimento>> call, Response<List<Estabelecimento>> response) {
+
+                estabelecimentoList = response.body();
                 listaEstabelecimentoAdapter = new ListaEstabelecimentoAdapter(estabelecimentoList, FindEstablishmentActivity.this);
                 listView.setAdapter(listaEstabelecimentoAdapter);
                 listView.setDivider(null);
@@ -69,7 +77,7 @@ public class FindEstablishmentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Page<Estabelecimento>> call, Throwable t) {
+            public void onFailure(Call<List<Estabelecimento>> call, Throwable t) {
                 new EstabelecimentoException("Falha ao buscar Estabelecimentos de Saúde.");
                 dialog.hide();
 

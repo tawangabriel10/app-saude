@@ -50,9 +50,9 @@ public class EstabelecimentoRestController {
     }
 
     @RequestMapping(value = "/buscar/{offset}/{limit}",method = RequestMethod.GET)
-    public ResponseEntity<Page<Estabelecimento>> buscar(@PathVariable("offset") int offset,
+    public ResponseEntity<List<Estabelecimento>> buscar(@PathVariable("offset") int offset,
                                                         @PathVariable("limit") int limit) {
-        return new ResponseEntity<Page<Estabelecimento>>(estabelecimentoService.buscar(offset, limit), HttpStatus.OK);
+        return new ResponseEntity<List<Estabelecimento>>(estabelecimentoService.buscar(offset, limit), HttpStatus.OK);
 
     }
 

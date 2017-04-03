@@ -32,4 +32,9 @@ public class UsuarioService {
     public List<Usuario> buscar() {
         return usuarioRepository.findAll();
     }
+    
+    @Transactional(readOnly = true)
+    public Usuario consultar(Long id) {
+        return usuarioRepository.findOne(id);
+    }
 }

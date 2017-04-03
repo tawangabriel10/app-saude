@@ -8,7 +8,6 @@ import br.com.saude.app.project.R;
 /**
  * Created by tawan on 3/2/17.
  */
-
 public class HomeActivity extends AppCompatActivity {
 
     @Override

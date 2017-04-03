@@ -27,7 +27,7 @@ public class EstabelecimentoService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void salvarEstabelecimentos(List<Estabelecimento> estabelecimentos) {
         estabelecimentos.forEach(e -> {
-            if (isExisteEstabelecimento(e.getCodUnidade())) {
+        	if (isExisteEstabelecimento(e.getCodUnidade())) {
                 estabelecimentoRepository.save(e);
             }
         });
@@ -39,8 +39,9 @@ public class EstabelecimentoService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Estabelecimento> buscar(int offset, int limit) {
+    public List<Estabelecimento> buscar(int offset, int limit) {
         Pageable pageable = new PageRequest(offset, limit);
-        return estabelecimentoRepository.findAll(pageable);
+        Page<Estabelecimento> pagination = estabelecimentoRepository.findAll(pageable);
+        return pagination.getContent();
     }
 }

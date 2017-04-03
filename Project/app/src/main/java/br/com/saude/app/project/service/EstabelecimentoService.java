@@ -23,9 +23,8 @@ import retrofit2.http.Query;
 public interface EstabelecimentoService {
 
     @Headers({"Content-Type: application/json"})
-    @GET("http://localhost:8080/estabelecimento/{offset}/{limit}")
-    void buscarEstabelecimentos(@Path("offset") int offset,
-                     @Path("limit") int limit,
-                     Callback<Page<Estabelecimento>> callback);
+    @GET("estabelecimento/buscar/{offset}/{limit}")
+    Call<List<Estabelecimento>> buscarEstabelecimentos(@Path("offset") int offset,
+                     @Path("limit") int limit);
 
 }
