@@ -19,6 +19,7 @@ import br.com.saude.app.project.component.Page;
 import br.com.saude.app.project.exception.EstabelecimentoException;
 import br.com.saude.app.project.model.Estabelecimento;
 import br.com.saude.app.project.service.EstabelecimentoService;
+import br.com.saude.app.project.util.RestUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -49,11 +50,11 @@ public class FindEstablishmentActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.7:8080/")
+                .baseUrl(RestUtil.URL_BASE_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final ProgressDialog dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "Buscando estabelecimentos...", true);
 
         estabelecimentoService = retrofit.create(EstabelecimentoService.class);
         Call<List<Estabelecimento>> resposta = estabelecimentoService.buscarEstabelecimentos(1, 10);

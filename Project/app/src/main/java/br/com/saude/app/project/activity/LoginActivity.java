@@ -42,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        email = (EditText) findViewById(R.id.emailLogin);
+        senha = (EditText) findViewById(R.id.senhaLogin);
+
         usuarioService = retrofit.create(UsuarioService.class);
     }
 
