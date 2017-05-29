@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 
 /**
  * Created by tawan on 4/2/17.
@@ -14,6 +15,6 @@ import retrofit2.http.Headers;
 public interface UsuarioService {
 
     @Headers({"Content-Type: application/json"})
-    @GET("usuario/login")
-    Call<Usuario> autenticarUsuario(@Body LoginDTO dados);
+    @GET("usuario/login/{email}/{senha}")
+    Call<Usuario> autenticarUsuario(@Path("email") String email, @Path("senha") String senha);
 }

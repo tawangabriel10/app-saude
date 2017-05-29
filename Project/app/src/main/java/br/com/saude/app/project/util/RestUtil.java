@@ -5,7 +5,11 @@ package br.com.saude.app.project.util;
  */
 public final class RestUtil {
 
-    public static final String URL_BASE_API = "http://192.168.1.7:8080/";
+    private static final String URL_BASE_API = "https://api-saude-app.herokuapp.com/";
 
     private RestUtil(){}
+
+    public static String getURLBASE() {
+        return URL_BASE_API;
+    }
 }

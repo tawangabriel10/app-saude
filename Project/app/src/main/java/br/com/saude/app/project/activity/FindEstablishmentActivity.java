@@ -7,15 +7,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import br.com.saude.app.project.R;
 import br.com.saude.app.project.adapter.ListaEstabelecimentoAdapter;
-import br.com.saude.app.project.component.Page;
 import br.com.saude.app.project.exception.EstabelecimentoException;
 import br.com.saude.app.project.model.Estabelecimento;
 import br.com.saude.app.project.service.EstabelecimentoService;
@@ -50,39 +46,49 @@ public class FindEstablishmentActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(RestUtil.URL_BASE_API)
+                .baseUrl(RestUtil.getURLBASE())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        buscarEstabelecimentos();
+    }
+
+
+    private void buscarEstabelecimentos() {
         final ProgressDialog dialog = ProgressDialog.show(this, "", "Buscando estabelecimentos...", true);
 
-        estabelecimentoService = retrofit.create(EstabelecimentoService.class);
-        Call<List<Estabelecimento>> resposta = estabelecimentoService.buscarEstabelecimentos(1, 10);
-
-        resposta.enqueue(new Callback<List<Estabelecimento>>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<List<Estabelecimento>> call, Response<List<Estabelecimento>> response) {
+            public void run() {
+                estabelecimentoService = retrofit.create(EstabelecimentoService.class);
+                Call<List<Estabelecimento>> resposta = estabelecimentoService.buscarEstabelecimentos(1,5);
 
-                estabelecimentoList = response.body();
-                listaEstabelecimentoAdapter = new ListaEstabelecimentoAdapter(estabelecimentoList, FindEstablishmentActivity.this);
-                listView.setAdapter(listaEstabelecimentoAdapter);
-                listView.setDivider(null);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                resposta.enqueue(new Callback<List<Estabelecimento>>() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        estabelecimentoSelecionado = (Estabelecimento) parent.getItemAtPosition(position);
+                    public void onResponse(Call<List<Estabelecimento>> call, Response<List<Estabelecimento>> response) {
+
+                        estabelecimentoList = response.body();
+                        listaEstabelecimentoAdapter = new ListaEstabelecimentoAdapter(estabelecimentoList, FindEstablishmentActivity.this);
+                        listView.setAdapter(listaEstabelecimentoAdapter);
+                        listView.setDivider(null);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                estabelecimentoSelecionado = (Estabelecimento) parent.getItemAtPosition(position);
+                            }
+                        });
+
+                        dialog.hide();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Estabelecimento>> call, Throwable t) {
+                        new EstabelecimentoException("Falha ao buscar Estabelecimentos de Saúde.");
+                        dialog.hide();
+
                     }
                 });
-
-                dialog.hide();
             }
-
-            @Override
-            public void onFailure(Call<List<Estabelecimento>> call, Throwable t) {
-                new EstabelecimentoException("Falha ao buscar Estabelecimentos de Saúde.");
-                dialog.hide();
-
-            }
-        });
+        }).start();
     }
 }

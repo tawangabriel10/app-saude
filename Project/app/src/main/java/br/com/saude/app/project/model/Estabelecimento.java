@@ -14,8 +14,8 @@ public class Estabelecimento implements Serializable {
     private String cep;
     private String cidade;
     private String cnpj;
-    private Long codCnes;
-    private Long codIbge;
+    private String codCnes;
+    private String codIbge;
     private String codUnidade;
     private String descricaoCompleta;
     private String email;
@@ -93,19 +93,19 @@ public class Estabelecimento implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public Long getCodCnes() {
+    public String getCodCnes() {
         return codCnes;
     }
 
-    public void setCodCnes(Long codCnes) {
+    public void setCodCnes(String codCnes) {
         this.codCnes = codCnes;
     }
 
-    public Long getCodIbge() {
+    public String getCodIbge() {
         return codIbge;
     }
 
-    public void setCodIbge(Long codIbge) {
+    public void setCodIbge(String codIbge) {
         this.codIbge = codIbge;
     }
 
@@ -314,6 +314,15 @@ public class Estabelecimento implements Serializable {
     }
 
     public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+
+    public void setLat(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLong(Double longitude) {
         this.longitude = longitude;
     }
 }

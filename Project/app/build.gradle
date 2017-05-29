@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+    useLibrary  'org.apache.http.legacy'
     defaultConfig {
         applicationId "br.com.saude.app.project"
         minSdkVersion 16
@@ -34,17 +35,22 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
 
-    //dagger 2 inject library
-    compile 'com.google.dagger:dagger:2.0'
     //compile 'com.android.support:recyclerview-v7:22.2.0'
     provided 'javax.annotation:jsr250-api:1.0'
 
     /*Buffer Knife*/
     compile 'com.jakewharton:butterknife:8.5.1'
 
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
+
     /*Retrofit*/
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+
+    /*Google Services*/
+    compile 'com.google.android.gms:play-services:9.0.0'
 
     /*JUnit*/
     testCompile 'junit:junit:4.12'

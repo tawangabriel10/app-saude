@@ -38,14 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(RestUtil.URL_BASE_API)
+                .baseUrl(RestUtil.getURLBASE())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         email = (EditText) findViewById(R.id.emailLogin);
         senha = (EditText) findViewById(R.id.senhaLogin);
 
-        usuarioService = retrofit.create(UsuarioService.class);
     }
 
     public void entrarOnClick(View v) {
@@ -55,8 +54,9 @@ public class LoginActivity extends AppCompatActivity {
             email.getText().toString(),
             senha.getText().toString()
         );
+        usuarioService = retrofit.create(UsuarioService.class);
 
-        Call<Usuario> resposta = usuarioService.autenticarUsuario(dados);
+        Call<Usuario> resposta = usuarioService.autenticarUsuario(dados.getEmail(), dados.getSenha());
         resposta.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
